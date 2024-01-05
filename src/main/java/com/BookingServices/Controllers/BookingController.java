@@ -2,11 +2,10 @@ package com.BookingServices.Controllers;
 
 
 import com.BookingServices.DTOs.AddNewBankDTO;
+import com.BookingServices.DTOs.BookingRequestDTO;
 import com.BookingServices.DTOs.ResponingStatusArrayDTO;
 import com.BookingServices.DTOs.ResponingStatusDTO;
 import com.BookingServices.Services.BookingService;
-import com.twilio.Twilio;
-import com.twilio.rest.api.v2010.account.Message;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -16,7 +15,7 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/user/booking")
+@RequestMapping("/booking")
 @RequiredArgsConstructor
 public class BookingController {
     private  final BookingService bookingService;
@@ -27,7 +26,7 @@ public class BookingController {
             response.setStatus(404);
             return new ResponingStatusDTO(response.getStatus(),null,"NOT_FOUND");
         }
-        return new ResponingStatusDTO(response.getStatus(), (Map<String, Object>) Services,"OK");
+        return new ResponingStatusDTO(response.getStatus(), Services,"OK");
     }
 
     @GetMapping("/getallbank")
@@ -53,13 +52,13 @@ public class BookingController {
         return new ResponingStatusDTO(response.getStatus(),null,"The bank account of this bank  is existed");
     }
 
-//    @GetMapping("/sendOTP")
-//    public ResponingStatusDTO getOTP(@RequestParam("userId") Integer userId,HttpServletResponse response){
-//        boolean res = bookingService.sendOTP(userId);
-//        if(res){
-//            return new ResponingStatusDTO(response.getStatus(),null,"OK");
-//        }
-//        response.setStatus(404);
-//        return new ResponingStatusDTO(response.getStatus(),null,"NOT FOUND");
-//    }
+    @PostMapping("/order")
+    public ResponingStatusDTO addBooking(@RequestBody @Valid BookingRequestDTO data, HttpServletResponse response){
+        boolean dataService = bookingService.addTicket(data);
+        if(dataService){
+            return new ResponingStatusDTO(response.getStatus(),null,"OK");
+        }
+        response.setStatus(404);
+        return new ResponingStatusDTO(response.getStatus(),null,"Error");
+    }
 }

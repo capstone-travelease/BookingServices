@@ -3,12 +3,11 @@ server:
   error:
     include-message: always
 
-
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/TravelMarketPlace
+    url: jdbc:postgresql://34.87.58.66:5432/travelmarketplace
     username: postgres
-    password: 123456
+    password: capstonevlu
   jpa:
     hibernate:
       ddl-auto: none

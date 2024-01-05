@@ -2,11 +2,9 @@ package com.BookingServices.Services;
 
 
 import com.BookingServices.DTOs.AddNewBankDTO;
+import com.BookingServices.DTOs.BookingRequestDTO;
+import com.BookingServices.DTOs.ProductListDTO;
 import com.BookingServices.Repositories.UserRepository;
-import com.twilio.Twilio;
-import com.twilio.rest.api.v2010.account.Message;
-import com.twilio.rest.api.v2010.account.MessageCreator;
-import com.twilio.type.PhoneNumber;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -17,8 +15,8 @@ import java.util.*;
 public class BookingService {
     private final UserRepository userRepository;
     public Map<String,Object> getList(Integer userId){
-        boolean isCheckExist = userRepository.existsById(userId);
-        if(!isCheckExist){
+        Integer isCheckExist = userRepository.checkUser(userId);
+        if(isCheckExist == null){
             return null;
         }
         Map<String,Object> list = new HashMap<>();
@@ -50,25 +48,38 @@ public class BookingService {
          return 1;
     }
 
-//    public boolean sendOTP(Integer userId){
-//        Integer userData = userRepository.checkUser(userId);
-//        if(userData == null){
-//            return false;
-//        }
-//        try {
-//            Twilio.init(
-//                    "ACbc5c2f92ec9a93660d8a2e398e4033fb",
-//                    "8de57fd9e1c50c9cc90c73d2a2e3943b"
-//            );
-//            PhoneNumber to = new PhoneNumber("+84906385132");
-//            PhoneNumber from = new PhoneNumber("+15179170926");
-//            String message = "Hello";
-//            MessageCreator creator = Message.creator(to,from,message);
-//            creator.create();
-//            return true;
-//        }catch (Exception err){
-//            System.out.println(err);
-//            return false;
-//        }
-//    }
+    public boolean addTicket(BookingRequestDTO data) {
+        try {
+            Integer userId = userRepository.checkUser(data.getUserId());
+            Integer hotelId= userRepository.checkHotel(data.getHotelId());
+            if(userId == null || hotelId == null){
+                return false;
+            }
+            userRepository.insertTicket(data.getUserId(),data.getHotelId(),1,data.getCheckinDate(), data.getCheckoutDate(), data.getTexas(), data.getCoupon(), data.getNote(), data.getTotalPrice(),data.getAccountId());
+            Integer Booking = userRepository.idBooking();
+            boolean isCheckAddProduct = addProductList(data.getProductList(),Booking);
+            if(!isCheckAddProduct){
+                return false;
+            }
+            return true;
+        }catch (Exception exception){
+            System.out.println(exception);
+            return false;
+        }
+    }
+    private boolean addProductList(List<ProductListDTO> productList, Integer bookingId){
+        try{
+            for (ProductListDTO i: productList
+                 ) {
+               if(userRepository.checkRooms(i.getRoomId()) == null){
+                   return false;
+               }
+               userRepository.insertProductList(i.getRoomId(),bookingId,i.getMaxGuest(),i.getRoomQuantity());
+            }
+            return true;
+        }catch (Exception exception){
+            System.out.println(exception);
+            return false;
+        }
+    }
 }
