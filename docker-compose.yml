@@ -1,0 +1,10 @@
+version: "3.3"
+services:
+  login:
+    container_name: booking-services
+    image: coderbillzay/booking-services
+    ports:
+      - '1947:1947'
+    volumes:
+      - ./:/server
+    restart: always
