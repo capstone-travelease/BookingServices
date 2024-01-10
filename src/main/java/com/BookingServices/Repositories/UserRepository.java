@@ -12,12 +12,13 @@ import java.util.*;
 
 @Repository
 public interface UserRepository extends JpaRepository<Accounts,Integer> {
-    @Query(value = "SELECT ac.id_account,ac.bank_id as \\\"bankId\\\", b.namebank as \\\"nameBank\\\", b.imagebank as \\\"imageBank\\\", b.typeBank as \\\"typeBank\\\", ac.accountnumber as \\\"accountNumber\\\",ac.accountName as \\\"accountName\\\" FROM accounts ac\n" +
+    @Query(value = "SELECT ac.id_account as \\\"accountId\\\",ac.bank_id as \\\"bankId\\\", b.namebank as \\\"nameBank\\\", b.imagebank as \\\"imageBank\\\", b.typeBank as \\\"typeBank\\\", ac.accountnumber as \\\"accountNumber\\\",ac.accountName as \\\"accountName\\\" FROM accounts ac\n" +
             "INNER JOIN banks b ON b.bank_id = ac.bank_id\n" +
             "WHERE ac.user_id = ?",nativeQuery = true)
     List<Map<String, Object>> listPaymentMethod(Integer userId);
 
-    @Query(value = "SELECT * FROM banks b where b.typebank = ?1",nativeQuery = true)
+    @Query(value = "SELECT bank_id as \\\"bankId\\\", namebank as \\\"nameBank\\\", imagebank as \\\"imageBank\\\", typebank as \\\"bankType\\\"\n" +
+            "\tFROM public.banks b where b.typebank = ?1",nativeQuery = true)
     List<Map<String,Object>> listingBank(Integer typebank);
 
     @Query(value = "Select user_id from users u where u.user_id = ?1",nativeQuery = true)
@@ -46,9 +47,9 @@ public interface UserRepository extends JpaRepository<Accounts,Integer> {
     @Modifying
     @Transactional
     @Query(value = "INSERT INTO public.productlist(\n" +
-            "\troom_id, booking_id, max_guest, room_quantity)\n" +
-            "\tVALUES (?, ?, ?, ?);",nativeQuery = true)
-    void insertProductList(Integer roomId, Integer idBooking,Integer maxGeust, Integer roomQuality);
+            "\troom_id, booking_id, room_quantity)\n" +
+            "\tVALUES (?1, ?2, ?3);",nativeQuery = true)
+    void insertProductList(Integer roomId, Integer idBooking, Integer roomQuality);
 
 
     @Modifying

@@ -9,6 +9,5 @@ import lombok.RequiredArgsConstructor;
 @AllArgsConstructor
 public class ProductListDTO {
     private Integer roomId;
-    private Integer maxGuest;
     private Integer roomQuantity;
 }

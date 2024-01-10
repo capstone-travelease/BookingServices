@@ -11,6 +11,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -29,7 +30,7 @@ public class BookingController {
         return new ResponingStatusDTO(response.getStatus(), Services,"OK");
     }
 
-    @GetMapping("/getallbank")
+    @GetMapping("/getbank")
     public ResponingStatusArrayDTO getAllBanks(@RequestParam("banktype") Integer banktype, HttpServletResponse response){
         List<Map<String,Object>> banks = bookingService.getAllBanks(banktype);
         if(banks.isEmpty()){
@@ -54,11 +55,17 @@ public class BookingController {
 
     @PostMapping("/order")
     public ResponingStatusDTO addBooking(@RequestBody @Valid BookingRequestDTO data, HttpServletResponse response){
-        boolean dataService = bookingService.addTicket(data);
-        if(dataService){
-            return new ResponingStatusDTO(response.getStatus(),null,"OK");
+        Integer serviceStatus = bookingService.addTicket(data);
+        if(serviceStatus == 1){
+            response.setStatus(404);
+            return new ResponingStatusDTO(response.getStatus(),null,"NOT FOUND");
+        } else if (serviceStatus == 2) {
+            response.setStatus(400);
+            return new ResponingStatusDTO(response.getStatus(),null,"BAD REQUEST");
+        } else if (serviceStatus == 3) {
+            response.setStatus(501);
+            return new ResponingStatusDTO(response.getStatus(),null,"Not Implemented");
         }
-        response.setStatus(404);
-        return new ResponingStatusDTO(response.getStatus(),null,"Error");
+        return new ResponingStatusDTO(response.getStatus(),null,"OK");
     }
 }

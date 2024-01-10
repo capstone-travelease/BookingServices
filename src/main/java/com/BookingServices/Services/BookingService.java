@@ -6,8 +6,12 @@ import com.BookingServices.DTOs.BookingRequestDTO;
 import com.BookingServices.DTOs.ProductListDTO;
 import com.BookingServices.Repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cglib.core.Local;
 import org.springframework.stereotype.Service;
 
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 @Service
@@ -48,23 +52,27 @@ public class BookingService {
          return 1;
     }
 
-    public boolean addTicket(BookingRequestDTO data) {
+    public Integer addTicket(BookingRequestDTO data) {
         try {
             Integer userId = userRepository.checkUser(data.getUserId());
             Integer hotelId= userRepository.checkHotel(data.getHotelId());
+            boolean isCheckDate = validateDate(data.getCheckinDate(),data.getCheckoutDate());
             if(userId == null || hotelId == null){
-                return false;
+                return 1;
+            }
+            if(!isCheckDate){
+               return 2;
             }
             userRepository.insertTicket(data.getUserId(),data.getHotelId(),1,data.getCheckinDate(), data.getCheckoutDate(), data.getTaxes(), data.getCoupon(), data.getNote(), data.getTotalPrice(),data.getAccountId());
             Integer Booking = userRepository.idBooking();
             boolean isCheckAddProduct = addProductList(data.getProductList(),Booking);
             if(!isCheckAddProduct){
-                return false;
+                return 3;
             }
-            return true;
+            return 4;
         }catch (Exception exception){
             System.out.println(exception);
-            return false;
+            return 3;
         }
     }
     private boolean addProductList(List<ProductListDTO> productList, Integer bookingId){
@@ -74,12 +82,21 @@ public class BookingService {
                if(userRepository.checkRooms(i.getRoomId()) == null){
                    return false;
                }
-               userRepository.insertProductList(i.getRoomId(),bookingId,i.getMaxGuest(),i.getRoomQuantity());
+               userRepository.insertProductList(i.getRoomId(), bookingId,i.getRoomQuantity());
             }
             return true;
         }catch (Exception exception){
             System.out.println(exception);
             return false;
         }
+    }
+
+    private boolean validateDate(Date checkIn, Date checkOut){
+        Date dateNow = new Date();
+        if(checkIn.equals(dateNow) || checkIn.after(dateNow) || checkOut.after(dateNow)){
+          if (checkIn.before(checkOut))
+              return true;
+       }
+        return false;
     }
 }
