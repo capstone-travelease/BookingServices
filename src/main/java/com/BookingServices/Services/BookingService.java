@@ -14,7 +14,7 @@ import java.util.*;
 @RequiredArgsConstructor
 public class BookingService {
     private final UserRepository userRepository;
-    public Map<String,Object> getList(Integer userId){
+    public Object getList(Integer userId){
         Integer isCheckExist = userRepository.checkUser(userId);
         if(isCheckExist == null){
             return null;
@@ -22,7 +22,7 @@ public class BookingService {
         Map<String,Object> list = new HashMap<>();
         list.put("userId",userId);
         list.put("list",userRepository.listPaymentMethod(userId));
-        return list;
+        return list.get("list");
     }
     public List<Map<String,Object>> getAllBanks(Integer type){
         List<Map<String,Object>> isCheckNull = userRepository.listingBank(type);
@@ -55,7 +55,7 @@ public class BookingService {
             if(userId == null || hotelId == null){
                 return false;
             }
-            userRepository.insertTicket(data.getUserId(),data.getHotelId(),1,data.getCheckinDate(), data.getCheckoutDate(), data.getTexas(), data.getCoupon(), data.getNote(), data.getTotalPrice(),data.getAccountId());
+            userRepository.insertTicket(data.getUserId(),data.getHotelId(),1,data.getCheckinDate(), data.getCheckoutDate(), data.getTaxes(), data.getCoupon(), data.getNote(), data.getTotalPrice(),data.getAccountId());
             Integer Booking = userRepository.idBooking();
             boolean isCheckAddProduct = addProductList(data.getProductList(),Booking);
             if(!isCheckAddProduct){

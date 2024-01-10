@@ -12,7 +12,7 @@ import java.util.Objects;
 @AllArgsConstructor
 public class ResponingStatusDTO {
     private Integer code;
-    private Map<String, Object> data;
+    private Object data;
     private String message;
 
 }

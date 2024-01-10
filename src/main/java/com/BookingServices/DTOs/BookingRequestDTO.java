@@ -33,7 +33,7 @@ public class BookingRequestDTO {
 
      @NotNull
      @NotBlank
-     private String texas;
+     private String taxes;
 
      private String coupon;
      private String note;

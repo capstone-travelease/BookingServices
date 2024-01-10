@@ -21,6 +21,6 @@ public class AddNewBankDTO {
 
     @NotNull
     @NotBlank
-    @Size(min = 16, max = 19)
+    @Size(min = 10, max = 20)
     private String accountNumber;
 }
