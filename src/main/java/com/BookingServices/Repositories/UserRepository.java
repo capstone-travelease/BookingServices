@@ -37,9 +37,9 @@ public interface UserRepository extends JpaRepository<Accounts,Integer> {
     @Modifying
     @Transactional
     @Query(value = "INSERT INTO public.booking(\n" +
-            "\t user_id, hotel_id, bookingstatus_id, chekin_date, checkout_date, taxes, coupon, note, total_price, account_id)\n" +
-            "\tVALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8, ?9, ?10);",nativeQuery = true)
-    void insertTicket(Integer userId,Integer hotelId,Integer status,Date checkin, Date checkout, String taxes, String coupon, String note, Integer total,Integer accountId);
+            "\t user_id, hotel_id, bookingstatus_id, chekin_date, checkout_date, taxes, coupon, note, total_price, account_id,bookingdate)\n" +
+            "\tVALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8, ?9, ?10,?11);",nativeQuery = true)
+    void insertTicket(Integer userId,Integer hotelId,Integer status,Date checkin, Date checkout, String taxes, String coupon, String note, Integer total,Integer accountId,Date dateNow);
 
     @Query(value = "Select lastval()",nativeQuery = true)
     Integer idBooking();

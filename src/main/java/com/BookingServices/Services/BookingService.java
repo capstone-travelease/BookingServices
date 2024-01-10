@@ -63,7 +63,8 @@ public class BookingService {
             if(!isCheckDate){
                return 2;
             }
-            userRepository.insertTicket(data.getUserId(),data.getHotelId(),1,data.getCheckinDate(), data.getCheckoutDate(), data.getTaxes(), data.getCoupon(), data.getNote(), data.getTotalPrice(),data.getAccountId());
+            Date dateNow = new Date();
+            userRepository.insertTicket(data.getUserId(),data.getHotelId(),1,data.getCheckinDate(), data.getCheckoutDate(), data.getTaxes(), data.getCoupon(), data.getNote(), data.getTotalPrice(),data.getAccountId(),dateNow);
             Integer Booking = userRepository.idBooking();
             boolean isCheckAddProduct = addProductList(data.getProductList(),Booking);
             if(!isCheckAddProduct){
