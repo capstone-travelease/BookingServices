@@ -64,9 +64,9 @@ public class BookingService {
                return 2;
             }
             Date dateNow = new Date();
-            userRepository.insertTicket(data.getUserId(),data.getHotelId(),1,data.getCheckinDate(), data.getCheckoutDate(), data.getTaxes(), data.getCoupon(), data.getNote(), data.getTotalPrice(),data.getAccountId(),dateNow);
-            Integer Booking = userRepository.idBooking();
-            boolean isCheckAddProduct = addProductList(data.getProductList(),Booking);
+            Integer bookingId = randomBookingId();
+            userRepository.insertTicket(bookingId,data.getUserId(),data.getHotelId(),1,data.getCheckinDate(), data.getCheckoutDate(), data.getTaxes(), data.getCoupon(), data.getNote(), data.getTotalPrice(),data.getAccountId(),dateNow);
+            boolean isCheckAddProduct = addProductList(data.getProductList(),bookingId);
             if(!isCheckAddProduct){
                 return 3;
             }
@@ -99,5 +99,14 @@ public class BookingService {
               return true;
        }
         return false;
+    }
+
+    private Integer randomBookingId(){
+        Integer ranNum = null;
+        for (int i=0; i<5; i++) {
+            Random rand = new Random();
+            ranNum = rand.nextInt(10000) * 2;
+        }
+        return ranNum;
     }
 }
