@@ -17,8 +17,8 @@ public class AfterBookingService {
         this.bookingRepository = bookingRepository;
     }
 
-    public List<Object> getBooking(String statusName){
-        List<Object> dataBooking = bookingRepository.getBookingList(statusName);
+    public List<Object> getBooking(String statusName, Integer userId){
+        List<Object> dataBooking = bookingRepository.getBookingList(statusName, userId);
 
         return dataBooking;
     }

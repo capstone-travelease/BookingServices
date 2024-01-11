@@ -1,6 +1,7 @@
 package com.BookingServices.DTOs;
 
 public class ResponseBookingDTO {
+    private Integer bookingId;
     private Integer hotelId;
     private String hotelName;
     private String hotelAddress;
@@ -11,7 +12,9 @@ public class ResponseBookingDTO {
     public ResponseBookingDTO() {
     }
 
-    public ResponseBookingDTO(String hotelName, String hotelAddress, String bookingStatus, String fileUrl, Double ratePoint) {
+    public ResponseBookingDTO(Integer bookingId, Integer hotelId, String hotelName, String hotelAddress, String bookingStatus, String fileUrl, Double ratePoint) {
+        this.bookingId = bookingId;
+        this.hotelId = hotelId;
         this.hotelName = hotelName;
         this.hotelAddress = hotelAddress;
         this.bookingStatus = bookingStatus;
@@ -19,13 +22,12 @@ public class ResponseBookingDTO {
         this.ratePoint = ratePoint;
     }
 
-    public ResponseBookingDTO(Integer hotelId, String hotelName, String hotelAddress, String bookingStatus, String fileUrl, Double ratePoint) {
-        this.hotelId = hotelId;
-        this.hotelName = hotelName;
-        this.hotelAddress = hotelAddress;
-        this.bookingStatus = bookingStatus;
-        this.fileUrl = fileUrl;
-        this.ratePoint = ratePoint;
+    public Integer getBookingId() {
+        return bookingId;
+    }
+
+    public void setBookingId(Integer bookingId) {
+        this.bookingId = bookingId;
     }
 
     public Integer getHotelId() {
@@ -79,7 +81,8 @@ public class ResponseBookingDTO {
     @Override
     public String toString() {
         return "ResponseBookingDTO{" +
-                "hotelId=" + hotelId +
+                "bookingId=" + bookingId +
+                ", hotelId=" + hotelId +
                 ", hotelName='" + hotelName + '\'' +
                 ", hotelAddress='" + hotelAddress + '\'' +
                 ", bookingStatus='" + bookingStatus + '\'' +

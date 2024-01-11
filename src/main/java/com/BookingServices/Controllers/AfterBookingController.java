@@ -1,5 +1,6 @@
 package com.BookingServices.Controllers;
 
+import com.BookingServices.DTOs.AfterBookingRequestDTO;
 import com.BookingServices.DTOs.ResponingStatusDTO;
 import com.BookingServices.DTOs.TicketRequestDTO;
 import com.BookingServices.Services.AfterBookingService;
@@ -19,8 +20,8 @@ public class AfterBookingController {
     }
 
     @GetMapping("get-orders")
-    public ResponingStatusDTO getBooking(@RequestParam(value = "statusName", required = true) String statusName){
-        List<Object> data = afterBookingService.getBooking(statusName);
+    public ResponingStatusDTO getBooking(@RequestBody AfterBookingRequestDTO afterBookingRequestDTO){
+        List<Object> data = afterBookingService.getBooking(afterBookingRequestDTO.getStatusName(), afterBookingRequestDTO.getUserId());
 
         return new ResponingStatusDTO(
                 200,
