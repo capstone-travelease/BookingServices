@@ -1,8 +1,15 @@
 package com.BookingServices.DTOs;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+
 public class AfterBookingRequestDTO
 {
+    @NotNull
+    @NotBlank
     private String statusName;
+
+    @NotNull
     private Integer userId;
 
     public AfterBookingRequestDTO(String statusName, Integer userId) {
