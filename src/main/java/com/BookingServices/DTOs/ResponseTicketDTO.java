@@ -7,6 +7,7 @@ public class ResponseTicketDTO {
     private Integer ticketId;
     private String fileUrl;
     private String hotelName;
+    private String hotelCity;
     private String userName;
     private String userEmail;
     private String userPhone;
@@ -19,10 +20,11 @@ public class ResponseTicketDTO {
     public ResponseTicketDTO() {
     }
 
-    public ResponseTicketDTO(Integer ticketId, String fileUrl, String hotelName, String userName, String userEmail, String userPhone, Date checkInDate, Date checkOutDate, Long totalPrice) {
+    public ResponseTicketDTO(Integer ticketId, String fileUrl, String hotelName, String hotelCity, String userName, String userEmail, String userPhone, Date checkInDate, Date checkOutDate, Long totalPrice) {
         this.ticketId = ticketId;
         this.fileUrl = fileUrl;
         this.hotelName = hotelName;
+        this.hotelCity = hotelCity;
         this.userName = userName;
         this.userEmail = userEmail;
         this.userPhone = userPhone;
@@ -31,11 +33,11 @@ public class ResponseTicketDTO {
         this.totalPrice = totalPrice;
     }
 
-    public Integer getticketId() {
+    public Integer getTicketId() {
         return ticketId;
     }
 
-    public void setticketId(Integer ticketId) {
+    public void setTicketId(Integer ticketId) {
         this.ticketId = ticketId;
     }
 
@@ -53,6 +55,14 @@ public class ResponseTicketDTO {
 
     public void setHotelName(String hotelName) {
         this.hotelName = hotelName;
+    }
+
+    public String getHotelCity() {
+        return hotelCity;
+    }
+
+    public void setHotelCity(String hotelCity) {
+        this.hotelCity = hotelCity;
     }
 
     public String getUserName() {
@@ -123,9 +133,10 @@ public class ResponseTicketDTO {
     @Override
     public String toString() {
         return "ResponseTicketDTO{" +
-                "ticketId='" + ticketId + '\'' +
+                "ticketId=" + ticketId +
                 ", fileUrl='" + fileUrl + '\'' +
                 ", hotelName='" + hotelName + '\'' +
+                ", hotelCity='" + hotelCity + '\'' +
                 ", userName='" + userName + '\'' +
                 ", userEmail='" + userEmail + '\'' +
                 ", userPhone='" + userPhone + '\'' +
