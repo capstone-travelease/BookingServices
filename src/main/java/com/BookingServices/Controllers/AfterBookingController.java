@@ -47,7 +47,7 @@ public class AfterBookingController {
         if (status == 1){
             return new ResponseMessageDTO(
                     200,
-                    "Update Successful"
+                    "Cancel Ticket with id : " + bookingId+ " Successful"
             );
         }
         else{
