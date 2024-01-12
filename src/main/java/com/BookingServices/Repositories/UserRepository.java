@@ -41,7 +41,6 @@ public interface UserRepository extends JpaRepository<Accounts,Integer> {
             "\tVALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8, ?9, ?10, ?11, ?12);",nativeQuery = true)
     void insertTicket(Integer bookingId,Integer userId,Integer hotelId,Integer status,Date checkin, Date checkout, String taxes, String coupon, String note, Integer total,Integer accountId,Date dateNow);
 
-
     @Modifying
     @Transactional
     @Query(value = "INSERT INTO public.product_list(\n" +
