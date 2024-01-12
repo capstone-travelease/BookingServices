@@ -33,4 +33,15 @@ public class AfterBookingService {
 
         return result;
     }
+
+    public Integer cancelBooking(Integer bookingId){
+        ResponseTicketDTO dataTicket = bookingRepository.getTicket(bookingId);
+
+        if(dataTicket == null){
+            return 2;
+        }
+
+        bookingRepository.updateBooking(3, bookingId);
+        return 1;
+    }
 }

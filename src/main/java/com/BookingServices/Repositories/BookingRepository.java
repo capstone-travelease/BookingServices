@@ -2,7 +2,9 @@ package com.BookingServices.Repositories;
 
 import com.BookingServices.DTOs.ResponseTicketDTO;
 import com.BookingServices.Entities.Booking;
+import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
@@ -34,4 +36,9 @@ public interface BookingRepository extends JpaRepository<Booking, Long> {
             "INNER JOIN Roomdetail rd ON rd.room_id = r.room_id\n" +
             "WHERE b.bookingId = ?1")
     List<Object> getProductList(Integer bookingId);
+
+    @Transactional
+    @Modifying(clearAutomatically = true)
+    @Query(value = "UPDATE Booking SET booking_status_id = ?1 WHERE booking_id = ?2", nativeQuery = true)
+    void updateBooking(Integer statusId, Integer bookingId);
 }

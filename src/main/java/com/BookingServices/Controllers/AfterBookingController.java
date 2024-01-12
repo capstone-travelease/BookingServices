@@ -2,6 +2,7 @@ package com.BookingServices.Controllers;
 
 import com.BookingServices.DTOs.AfterBookingRequestDTO;
 import com.BookingServices.DTOs.ResponingStatusDTO;
+import com.BookingServices.DTOs.ResponseMessageDTO;
 import com.BookingServices.Services.AfterBookingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -38,5 +39,22 @@ public class AfterBookingController {
                 data,
                 "Successful"
         );
+    }
+
+    @PutMapping("cancelBooking")
+    public ResponseMessageDTO cancelBooking(@RequestParam(value = "bookingId", required = true) Integer bookingId){
+        Integer status = afterBookingService.cancelBooking(bookingId);
+        if (status == 1){
+            return new ResponseMessageDTO(
+                    200,
+                    "Update Successful"
+            );
+        }
+        else{
+            return new ResponseMessageDTO(
+                    400,
+                    "Not found id : " + bookingId
+            );
+        }
     }
 }
