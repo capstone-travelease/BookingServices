@@ -23,8 +23,8 @@ public class AfterBookingService {
         return dataBooking;
     }
 
-    public Object getTicket(Integer userId, Integer bookingId){
-        ResponseTicketDTO dataTicket = bookingRepository.getTicket(userId, bookingId);
+    public Object getTicket(Integer bookingId){
+        ResponseTicketDTO dataTicket = bookingRepository.getTicket(bookingId);
         List<Object> data = bookingRepository.getProductList(bookingId);
 
         dataTicket.setProductList(data);

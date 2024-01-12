@@ -10,7 +10,7 @@ import java.util.List;
 
 @Repository
 public interface BookingRepository extends JpaRepository<Booking, Long> {
-    @Query("SELECT new com.BookingServices.DTOs.ResponseBookingDTO(b.bookingId, h.hotel_id, h.hotel_name, h.hotel_country, bs.bookingStatusName, atc.file_url, h.star_rating) FROM Booking b\n" +
+    @Query("SELECT new com.BookingServices.DTOs.ResponseBookingDTO(b.bookingId, h.hotel_id, h.hotel_name, h.hotel_city, h.hotel_country, bs.bookingStatusName, atc.file_url, h.star_rating) FROM Booking b\n" +
             "INNER JOIN Hotels h ON h.hotel_id = b.hotelId\n" +
             "INNER JOIN Users u ON u.id = b.userId\n" +
             "INNER JOIN booking_status bs ON bs.bookingStatusId = b.bookingStatusId\n" +
@@ -19,14 +19,14 @@ public interface BookingRepository extends JpaRepository<Booking, Long> {
             "WHERE bs.bookingStatusName = ?1 AND u.id = ?2")
     List<Object> getBookingList(String statusName, Integer userId);
 
-    @Query("SELECT new com.BookingServices.DTOs.ResponseTicketDTO(atc.file_url, h.hotel_name, u.fullname, u.email, u.phone, b.chekinDate, b.checkoutDate, b.totalPrice) FROM Booking b\n" +
+    @Query("SELECT new com.BookingServices.DTOs.ResponseTicketDTO(b.bookingId, atc.file_url, h.hotel_name, u.fullname, u.email, u.phone, b.chekinDate, b.checkoutDate, b.totalPrice) FROM Booking b\n" +
             "INNER JOIN Hotels h ON h.hotel_id = b.hotelId\n" +
             "INNER JOIN Users u ON u.id = b.userId\n" +
             "INNER JOIN booking_status bs ON bs.bookingStatusId = b.bookingStatusId\n" +
             "INNER JOIN HotelAttachment hatc ON hatc.hotel_id = h.hotel_id\n" +
             "INNER JOIN Attachment atc ON atc.attachment_id = hatc.attachment_id\n" +
-            "WHERE u.id = ?1 AND b.bookingId = ?2")
-    ResponseTicketDTO getTicket(Integer userId, Integer bookingId);
+            "WHERE b.bookingId = ?1")
+    ResponseTicketDTO getTicket(Integer bookingId);
 
     @Query("SELECT new com.BookingServices.DTOs.ResponseProductListDTO(r.room_name, rd.room_capacity, pl.roomQuantity) FROM ProductList pl\n" +
             "INNER JOIN Booking b ON b.bookingId = pl.bookingId\n" +

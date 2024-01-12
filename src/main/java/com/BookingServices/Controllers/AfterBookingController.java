@@ -2,7 +2,6 @@ package com.BookingServices.Controllers;
 
 import com.BookingServices.DTOs.AfterBookingRequestDTO;
 import com.BookingServices.DTOs.ResponingStatusDTO;
-import com.BookingServices.DTOs.TicketRequestDTO;
 import com.BookingServices.Services.AfterBookingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -31,8 +30,8 @@ public class AfterBookingController {
     }
 
     @GetMapping("getTicket")
-    public ResponingStatusDTO getTicket(@RequestBody TicketRequestDTO ticketRequestDTO){
-        Object data = afterBookingService.getTicket(ticketRequestDTO.getUserId(), ticketRequestDTO.getBookingId());
+    public ResponingStatusDTO getTicket(@RequestParam(value = "bookingId", required = true) Integer bookingId){
+        Object data = afterBookingService.getTicket(bookingId);
 
         return new ResponingStatusDTO(
                 200,

@@ -4,6 +4,7 @@ public class ResponseBookingDTO {
     private Integer bookingId;
     private Integer hotelId;
     private String hotelName;
+    private String hotelCity;
     private String hotelAddress;
     private String bookingStatus;
     private String fileUrl;
@@ -12,10 +13,11 @@ public class ResponseBookingDTO {
     public ResponseBookingDTO() {
     }
 
-    public ResponseBookingDTO(Integer bookingId, Integer hotelId, String hotelName, String hotelAddress, String bookingStatus, String fileUrl, Double ratePoint) {
+    public ResponseBookingDTO(Integer bookingId, Integer hotelId, String hotelName, String hotelCity, String hotelAddress, String bookingStatus, String fileUrl, Double ratePoint) {
         this.bookingId = bookingId;
         this.hotelId = hotelId;
         this.hotelName = hotelName;
+        this.hotelCity = hotelCity;
         this.hotelAddress = hotelAddress;
         this.bookingStatus = bookingStatus;
         this.fileUrl = fileUrl;
@@ -54,6 +56,14 @@ public class ResponseBookingDTO {
         this.hotelAddress = hotelAddress;
     }
 
+    public String getHotelCity() {
+        return hotelCity;
+    }
+
+    public void setHotelCity(String hotelCity) {
+        this.hotelCity = hotelCity;
+    }
+
     public String getBookingStatus() {
         return bookingStatus;
     }
@@ -84,6 +94,7 @@ public class ResponseBookingDTO {
                 "bookingId=" + bookingId +
                 ", hotelId=" + hotelId +
                 ", hotelName='" + hotelName + '\'' +
+                ", hotelCity='" + hotelCity + '\'' +
                 ", hotelAddress='" + hotelAddress + '\'' +
                 ", bookingStatus='" + bookingStatus + '\'' +
                 ", fileUrl='" + fileUrl + '\'' +
