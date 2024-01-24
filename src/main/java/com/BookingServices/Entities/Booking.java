@@ -15,16 +15,16 @@ public class Booking {
     private Integer userId;
     private Integer hotelId;
     private Integer bookingStatusId;
-    private Date chekinDate;
+    private Date checkinDate;
     private Date checkoutDate;
     private String taxes;
     private String note;
     private Long totalPrice;
     private Integer accountId;
 
-    public Booking(Integer bookingStatusId, Date chekinDate, Date checkoutDate, String taxes, String note, Long totalPrice, Integer accountId) {
+    public Booking(Integer bookingStatusId, Date checkinDate, Date checkoutDate, String taxes, String note, Long totalPrice, Integer accountId) {
         this.bookingStatusId = bookingStatusId;
-        this.chekinDate = chekinDate;
+        this.checkinDate = checkinDate;
         this.checkoutDate = checkoutDate;
         this.taxes = taxes;
         this.note = note;
@@ -32,12 +32,12 @@ public class Booking {
         this.accountId = accountId;
     }
 
-    public Booking(Integer bookingId, Integer userId, Integer hotelId, Integer bookingStatusId, Date chekinDate, Date checkoutDate, String taxes, String note, Long totalPrice, Integer accountId) {
+    public Booking(Integer bookingId, Integer userId, Integer hotelId, Integer bookingStatusId, Date checkinDate, Date checkoutDate, String taxes, String note, Long totalPrice, Integer accountId) {
         this.bookingId = bookingId;
         this.userId = userId;
         this.hotelId = hotelId;
         this.bookingStatusId = bookingStatusId;
-        this.chekinDate = chekinDate;
+        this.checkinDate = checkinDate;
         this.checkoutDate = checkoutDate;
         this.taxes = taxes;
         this.note = note;
@@ -77,12 +77,12 @@ public class Booking {
         this.bookingStatusId = bookingStatusId;
     }
 
-    public Date getchekinDate() {
-        return chekinDate;
+    public Date getcheckinDate() {
+        return checkinDate;
     }
 
-    public void setchekinDate(Date chekinDate) {
-        this.chekinDate = chekinDate;
+    public void setcheckinDate(Date checkinDate) {
+        this.checkinDate = checkinDate;
     }
 
     public Date getcheckoutDate() {

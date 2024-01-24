@@ -21,7 +21,7 @@ public interface BookingRepository extends JpaRepository<Booking, Long> {
             "WHERE bs.bookingStatusName = ?1 AND u.id = ?2")
     List<Object> getBookingList(String statusName, Integer userId);
 
-    @Query("SELECT new com.BookingServices.DTOs.ResponseTicketDTO(b.bookingId, atc.file_url, h.hotel_name, h.hotel_city, u.fullname, u.email, u.phone, b.chekinDate, b.checkoutDate, b.totalPrice) FROM Booking b\n" +
+    @Query("SELECT new com.BookingServices.DTOs.ResponseTicketDTO(b.bookingId, atc.file_url, h.hotel_name, h.hotel_city, u.fullname, u.email, u.phone, b.checkinDate, b.checkoutDate, b.totalPrice) FROM Booking b\n" +
             "INNER JOIN Hotels h ON h.hotel_id = b.hotelId\n" +
             "INNER JOIN Users u ON u.id = b.userId\n" +
             "INNER JOIN booking_status bs ON bs.bookingStatusId = b.bookingStatusId\n" +
