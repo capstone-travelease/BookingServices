@@ -37,7 +37,7 @@ public interface UserRepository extends JpaRepository<Accounts,Integer> {
     @Modifying
     @Transactional
     @Query(value = "INSERT INTO public.booking(\n" +
-            "\tbooking_id, user_id, hotel_id, booking_status_id, chekin_date, checkout_date, taxes, coupon, note, total_price, id_account, booking_date)\n" +
+            "\tbooking_id, user_id,  hotel_id, booking_status_id, checkin_date, checkout_date, taxes, coupon, note, total_price, id_account, booking_date)\n" +
             "\tVALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8, ?9, ?10, ?11, ?12);",nativeQuery = true)
     void insertTicket(Integer bookingId,Integer userId,Integer hotelId,Integer status,Date checkin, Date checkout, String taxes, String coupon, String note, Integer total,Integer accountId,Date dateNow);
 
