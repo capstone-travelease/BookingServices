@@ -5,6 +5,7 @@ import java.util.List;
 
 public class ResponseTicketDTO {
     private Integer ticketId;
+    private Integer hotelId;
     private String fileUrl;
     private String hotelName;
     private String hotelCity;
@@ -20,8 +21,9 @@ public class ResponseTicketDTO {
     public ResponseTicketDTO() {
     }
 
-    public ResponseTicketDTO(Integer ticketId, String fileUrl, String hotelName, String hotelCity, String userName, String userEmail, String userPhone, Date checkInDate, Date checkOutDate, Long totalPrice) {
+    public ResponseTicketDTO(Integer ticketId, Integer hotelId, String fileUrl, String hotelName, String hotelCity, String userName, String userEmail, String userPhone, Date checkInDate, Date checkOutDate, Long totalPrice) {
         this.ticketId = ticketId;
+        this.hotelId = hotelId;
         this.fileUrl = fileUrl;
         this.hotelName = hotelName;
         this.hotelCity = hotelCity;
@@ -39,6 +41,14 @@ public class ResponseTicketDTO {
 
     public void setTicketId(Integer ticketId) {
         this.ticketId = ticketId;
+    }
+
+    public Integer getHotelId() {
+        return hotelId;
+    }
+
+    public void setHotelId(Integer hotelId) {
+        this.hotelId = hotelId;
     }
 
     public String getFileUrl() {
@@ -134,6 +144,7 @@ public class ResponseTicketDTO {
     public String toString() {
         return "ResponseTicketDTO{" +
                 "ticketId=" + ticketId +
+                ", hotelId=" + hotelId +
                 ", fileUrl='" + fileUrl + '\'' +
                 ", hotelName='" + hotelName + '\'' +
                 ", hotelCity='" + hotelCity + '\'' +
