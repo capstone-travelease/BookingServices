@@ -6,8 +6,12 @@ import com.BookingServices.DTOs.BookingRequestDTO;
 import com.BookingServices.DTOs.ProductListDTO;
 import com.BookingServices.Repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.stereotype.Service;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.Instant;
 import java.util.*;
 
 @Service
@@ -48,13 +52,15 @@ public class BookingService {
          return 1;
     }
 
+
+    @RabbitListener(queues = "queue_book")
     public Integer addTicket(BookingRequestDTO data) {
         try {
             Integer userId = userRepository.checkUser(data.getUserId());
             Integer hotelId= userRepository.checkHotel(data.getHotelId());
             boolean isCheckDate = validateDate(data.getCheckinDate(),data.getCheckoutDate());
             if(userId == null || hotelId == null){
-                return 1;
+               return 1;
             }
             if(!isCheckDate){
                return 2;
@@ -87,7 +93,6 @@ public class BookingService {
             return false;
         }
     }
-
     private boolean validateDate(Date checkIn, Date checkOut){
         Date dateNow = new Date();
         if(checkIn.equals(dateNow) || checkIn.after(dateNow) || checkOut.after(dateNow)){

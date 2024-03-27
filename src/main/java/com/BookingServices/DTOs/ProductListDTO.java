@@ -10,4 +10,5 @@ import lombok.RequiredArgsConstructor;
 public class ProductListDTO {
     private Integer roomId;
     private Integer roomQuantity;
+    private Integer roomPrice;
 }

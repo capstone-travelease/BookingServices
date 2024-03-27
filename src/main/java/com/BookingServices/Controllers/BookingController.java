@@ -1,10 +1,8 @@
 package com.BookingServices.Controllers;
 
 
-import com.BookingServices.DTOs.AddNewBankDTO;
-import com.BookingServices.DTOs.BookingRequestDTO;
-import com.BookingServices.DTOs.ResponingStatusArrayDTO;
-import com.BookingServices.DTOs.ResponingStatusDTO;
+import com.BookingServices.DTOs.*;
+import com.BookingServices.Services.AfterBookingService;
 import com.BookingServices.Services.BookingService;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
@@ -19,6 +17,48 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class BookingController {
     private  final BookingService bookingService;
+    private AfterBookingService afterBookingService;
+
+
+
+    @GetMapping("get-orders")
+    public ResponingStatusDTO getBooking(@RequestBody AfterBookingRequestDTO afterBookingRequestDTO){
+        List<Object> data = afterBookingService.getBooking(afterBookingRequestDTO.getStatusName(), afterBookingRequestDTO.getUserId());
+        return new ResponingStatusDTO(
+                200,
+                data,
+                "Successful"
+        );
+    }
+
+    @GetMapping("getTicket")
+    public ResponingStatusDTO getTicket(@RequestParam(value = "bookingId", required = true) Integer bookingId){
+        Object data = afterBookingService.getTicket(bookingId);
+        return new ResponingStatusDTO(
+                200,
+                data,
+                "Successful"
+        );
+    }
+
+    @PutMapping("cancelBooking")
+    public ResponseMessageDTO cancelBooking(@RequestParam(value = "bookingId", required = true) Integer bookingId, HttpServletResponse response){
+        Integer status = afterBookingService.cancelBooking(bookingId);
+        if (status == 1){
+            response.setStatus(200);
+            return new ResponseMessageDTO(
+                    200,
+                    "Cancel Ticket with id : " + bookingId+ " Successful"
+            );
+        }
+        else{
+            response.setStatus(404);
+            return new ResponseMessageDTO(
+                    404,
+                    "Not found id : " + bookingId
+            );
+        }
+    }
     @GetMapping("/getlistaccount")
     public ResponingStatusDTO getAllAccount(@RequestParam("userid") Integer userId, HttpServletResponse response){
         var Services = bookingService.getList(userId);

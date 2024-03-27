@@ -4,6 +4,11 @@ server:
     include-message: always
 
 spring:
+  rabbitmq:
+    port: 5672
+    username: guest
+    password: guest
+    host: 35.240.226.176
   datasource:
     url: jdbc:postgresql://35.240.226.176:5432/travelmarketplace
     username: postgres
