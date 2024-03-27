@@ -59,37 +59,41 @@ public class BookingService {
             Integer userId = userRepository.checkUser(data.getUserId());
             Integer hotelId= userRepository.checkHotel(data.getHotelId());
             boolean isCheckDate = validateDate(data.getCheckinDate(),data.getCheckoutDate());
+            boolean isCheckRoomNull =  checkProductList(data.getProductList());
             if(userId == null || hotelId == null){
                return 1;
             }
-            if(!isCheckDate){
+            if(!isCheckDate || !isCheckRoomNull){
                return 2;
             }
             Date dateNow = new Date();
             Integer bookingId = randomBookingId();
             userRepository.insertTicket(bookingId,data.getUserId(),data.getHotelId(),1,data.getCheckinDate(), data.getCheckoutDate(), data.getTaxes(), data.getCoupon(), data.getNote(), data.getTotalPrice(),data.getAccountId(),dateNow);
-            boolean isCheckAddProduct = addProductList(data.getProductList(),bookingId);
-            if(!isCheckAddProduct){
-                return 3;
-            }
+            addProductList(data.getProductList(),bookingId);
             return 4;
         }catch (Exception exception){
             System.out.println(exception);
             return 3;
         }
     }
+
+    private boolean checkProductList(List<ProductListDTO> productList){
+        for (ProductListDTO i: productList
+        ) {
+            if(userRepository.checkRooms(i.getRoomId()) == null){
+                return false;
+            }
+        }
+        return true;
+    }
     private boolean addProductList(List<ProductListDTO> productList, Integer bookingId){
         try{
             for (ProductListDTO i: productList
                  ) {
-               if(userRepository.checkRooms(i.getRoomId()) == null){
-                   return false;
-               }
                userRepository.insertProductList(i.getRoomId(), bookingId,i.getRoomQuantity());
             }
             return true;
         }catch (Exception exception){
-            System.out.println(exception);
             return false;
         }
     }
