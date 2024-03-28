@@ -5,19 +5,32 @@ import com.BookingServices.DTOs.AddNewBankDTO;
 import com.BookingServices.DTOs.BookingRequestDTO;
 import com.BookingServices.DTOs.ProductListDTO;
 import com.BookingServices.Repositories.UserRepository;
+import freemarker.core.ParseException;
+import freemarker.template.*;
+import jakarta.mail.MessagingException;
+import jakarta.mail.internet.MimeMessage;
 import lombok.RequiredArgsConstructor;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.freemarker.FreeMarkerTemplateUtils;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.time.Instant;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.*;
 
 @Service
 @RequiredArgsConstructor
 public class BookingService {
     private final UserRepository userRepository;
+
+    @Autowired
+    private JavaMailSender sender;
+
+    @Autowired
+    private Configuration config;
     public Object getList(Integer userId){
         Integer isCheckExist = userRepository.checkUser(userId);
         if(isCheckExist == null){
@@ -70,6 +83,10 @@ public class BookingService {
             Integer bookingId = randomBookingId();
             userRepository.insertTicket(bookingId,data.getUserId(),data.getHotelId(),1,data.getCheckinDate(), data.getCheckoutDate(), data.getTaxes(), data.getCoupon(), data.getNote(), data.getTotalPrice(),data.getAccountId(),dateNow);
             addProductList(data.getProductList(),bookingId);
+//            List<Object> ticketInformation = userRepository.getTicketInformation(170);
+//            customizeTicket(ticketInformation);
+
+//            sendMail();
             return 4;
         }catch (Exception exception){
             System.out.println(exception);
@@ -77,6 +94,39 @@ public class BookingService {
         }
     }
 
+
+
+//    public List<Object> customizeTicket(List<Object> data){
+//        List<Object> ticketInformation = userRepository.getTicketInformation(170);
+//        return ticketInformation;
+//    }
+//
+//    private boolean sendMail(BookingRequestDTO data){
+//        MimeMessage message = sender.createMimeMessage();
+//        try {
+//            MimeMessageHelper helper = new MimeMessageHelper(message,MimeMessageHelper.MULTIPART_MODE_MIXED, StandardCharsets.UTF_8.name());
+//            Template t = config.getTemplate("bookingtemplates.ftl");
+//            String html = FreeMarkerTemplateUtils.processTemplateIntoString(t,data);
+//            helper.setTo("ngoctien.forwork@gmail.com");
+//            helper.setText(html, true);
+//            helper.setSubject("Pay Success !!");
+//            helper.setFrom("capstonevlu1204@gmail.com");
+//            sender.send(message);
+//            return true;
+//        } catch (MessagingException e) {
+//            throw new RuntimeException(e);
+//        } catch (TemplateNotFoundException e) {
+//            throw new RuntimeException(e);
+//        } catch (ParseException e) {
+//            throw new RuntimeException(e);
+//        } catch (MalformedTemplateNameException e) {
+//            throw new RuntimeException(e);
+//        } catch (IOException e) {
+//            throw new RuntimeException(e);
+//        } catch (TemplateException e) {
+//            throw new RuntimeException(e);
+//        }
+//    }
     private boolean checkProductList(List<ProductListDTO> productList){
         for (ProductListDTO i: productList
         ) {
@@ -90,7 +140,7 @@ public class BookingService {
         try{
             for (ProductListDTO i: productList
                  ) {
-               userRepository.insertProductList(i.getRoomId(), bookingId,i.getRoomQuantity());
+               userRepository.insertProductList(i.getRoomId(), bookingId,i.getRoomQuantity(),i.getRoomPrice());
             }
             return true;
         }catch (Exception exception){

@@ -1,5 +1,6 @@
 package com.BookingServices.Repositories;
 
+import com.BookingServices.DTOs.EmailContentDTO;
 import com.BookingServices.Entities.Accounts;
 import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -44,9 +45,9 @@ public interface UserRepository extends JpaRepository<Accounts,Integer> {
     @Modifying
     @Transactional
     @Query(value = "INSERT INTO public.product_list(\n" +
-            "\troom_id, booking_id, room_quantity)\n" +
-            "\tVALUES (?1, ?2, ?3);",nativeQuery = true)
-    void insertProductList(Integer roomId, Integer idBooking, Integer roomQuality);
+            "\troom_id, booking_id, room_quantity,price)\n" +
+            "\tVALUES (?1, ?2, ?3,?4);",nativeQuery = true)
+    void insertProductList(Integer roomId, Integer idBooking, Integer roomQuality,Integer roomPrice);
 
 
     @Modifying
@@ -55,5 +56,18 @@ public interface UserRepository extends JpaRepository<Accounts,Integer> {
             "\tuser_id, bank_id, accountname, accountnumber)\n" +
             "\tVALUES (?1, ?2, ?3, ?4);",nativeQuery = true)
     void insertBank(Integer userId,Integer bankId, String accountName, String accountNumber);
+
+
+//    @Query(value = "select u.full_name, b.booking_id, b.booking_date, h.hotel_name, h.hotel_address, b.checkin_date, b.checkout_date, bt.booking_status_name,\n" +
+//            "b.note, p.room_quantity, p.price, r.room_name, s.namebank,b.total_price FROM booking b\n" +
+//            "INNER JOIN hotels h on h.hotel_id = b.hotel_id\n" +
+//            "INNER JOIN users u on u.user_id = b.user_id\n" +
+//            "INNER JOIN booking_status bt on bt.booking_status_id = b.booking_status_id\n" +
+//            "INNER JOIN product_list p on p.booking_id = b.booking_id\n" +
+//            "INNER JOIN rooms r on r.room_id = p.room_id\n" +
+//            "INNER JOIN accounts a on a.id_account = b.id_account\n" +
+//            "INNER JOIN banks s on s.bank_id = a.bank_id\n" +
+//            "WHERE b.booking_id = ?1",nativeQuery = true)
+//    List<Object> getTicketInformation(Integer idBooking);
 
 }

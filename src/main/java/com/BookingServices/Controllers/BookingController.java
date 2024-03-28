@@ -19,7 +19,10 @@ public class BookingController {
     private  final BookingService bookingService;
     private AfterBookingService afterBookingService;
 
-
+//    @GetMapping("test")
+//    public List<Object> test(){
+//        return bookingService.customizeTicket(null);
+//    }
 
     @GetMapping("get-orders")
     public ResponingStatusDTO getBooking(@RequestBody AfterBookingRequestDTO afterBookingRequestDTO){
