@@ -17,6 +17,7 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class BookingController {
     private  final BookingService bookingService;
+    @Autowired
     private AfterBookingService afterBookingService;
 
 //    @GetMapping("test")
