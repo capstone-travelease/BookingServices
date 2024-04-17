@@ -11,16 +11,14 @@ import java.time.LocalDate;
 public class Attachment {
     @Id
     private Integer attachment_id;
-    private String attachment_name;
     private LocalDate upload_at;
     private String  file_url;
 
     public Attachment() {
     }
 
-    public Attachment(Integer attachment_id, String attachment_name, LocalDate upload_at, String file_url) {
+    public Attachment(Integer attachment_id, LocalDate upload_at, String file_url) {
         this.attachment_id = attachment_id;
-        this.attachment_name = attachment_name;
         this.upload_at = upload_at;
         this.file_url = file_url;
     }
@@ -31,14 +29,6 @@ public class Attachment {
 
     public void setAttachment_id(Integer attachment_id) {
         this.attachment_id = attachment_id;
-    }
-
-    public String getAttachment_name() {
-        return attachment_name;
-    }
-
-    public void setAttachment_name(String attachment_name) {
-        this.attachment_name = attachment_name;
     }
 
     public LocalDate getUpload_at() {
