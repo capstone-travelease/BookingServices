@@ -24,18 +24,18 @@ public class AfterBookingService {
     }
 
     public Object getTicket(Integer bookingId){
-        ResponseTicketDTO dataTicket = bookingRepository.getTicket(bookingId);
+        List<ResponseTicketDTO> dataTicket = bookingRepository.getTicket(bookingId);
         List<Object> data = bookingRepository.getProductList(bookingId);
 
-        dataTicket.setProductList(data);
+        dataTicket.get(0).setProductList(data);
 
-        Object result = (Object) dataTicket;
+        Object result = (Object) dataTicket.get(0);
 
         return result;
     }
 
     public Integer cancelBooking(Integer bookingId){
-        ResponseTicketDTO dataTicket = bookingRepository.getTicket(bookingId);
+        List<ResponseTicketDTO> dataTicket = bookingRepository.getTicket(bookingId);
 
         if(dataTicket == null){
             return 2;
