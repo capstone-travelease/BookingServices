@@ -6,7 +6,10 @@ import com.BookingServices.Repositories.BookingRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
 public class AfterBookingService {
@@ -18,9 +21,19 @@ public class AfterBookingService {
     }
 
     public List<Object> getBooking(String statusName, Integer userId){
-        List<Object> dataBooking = bookingRepository.getBookingList(statusName, userId);
+        List<ResponseBookingDTO> dataBooking = bookingRepository.getBookingList(statusName, userId);
+        List<Object> result = new LinkedList<>();
 
-        return dataBooking;
+        Map<Integer, List<ResponseBookingDTO>> groupedAttachment = dataBooking.stream()
+                .collect(Collectors.groupingBy(ResponseBookingDTO::getBookingId));
+
+        List<Object> transformedImage = groupedAttachment.values().stream()
+                .map(hotelsInGroup -> hotelsInGroup.get(0))
+                .collect(Collectors.toList());
+
+//        System.out.println(transformedImage);
+
+        return transformedImage;
     }
 
     public Object getTicket(Integer bookingId){

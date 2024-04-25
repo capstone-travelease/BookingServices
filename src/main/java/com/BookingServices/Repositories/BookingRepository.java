@@ -1,5 +1,6 @@
 package com.BookingServices.Repositories;
 
+import com.BookingServices.DTOs.ResponseBookingDTO;
 import com.BookingServices.DTOs.ResponseTicketDTO;
 import com.BookingServices.Entities.Booking;
 import jakarta.transaction.Transactional;
@@ -19,7 +20,7 @@ public interface BookingRepository extends JpaRepository<Booking, Long> {
             "INNER JOIN HotelAttachment hatc ON hatc.hotel_id = h.hotel_id\n"+
             "INNER JOIN Attachment atc ON atc.attachment_id = hatc.attachment_id\n"+
             "WHERE bs.bookingStatusName = ?1 AND u.id = ?2")
-    List<Object> getBookingList(String statusName, Integer userId);
+    List<ResponseBookingDTO> getBookingList(String statusName, Integer userId);
 
     @Query("SELECT new com.BookingServices.DTOs.ResponseTicketDTO(b.bookingId, h.hotel_id, atc.file_url, h.hotel_name, h.hotel_city, u.fullname, u.email, u.phone, b.checkinDate, b.checkoutDate, b.totalPrice) FROM Booking b\n" +
             "INNER JOIN Hotels h ON h.hotel_id = b.hotelId\n" +
