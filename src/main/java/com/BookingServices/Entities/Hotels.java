@@ -29,11 +29,12 @@ public class Hotels {
     private Double star_rating;
     private LocalDate check_in_time;
     private LocalDate check_out_time;
+    private Integer ownerId;
 
     public Hotels() {
     }
 
-    public Hotels(Integer hotel_id, String hotel_name, String hotel_address, String hotel_city, String hotel_country, String hotel_contract_number, String hotel_email, String hotel_description, Double star_rating, LocalDate check_in_time, LocalDate check_out_time, BitSet status) {
+    public Hotels(Integer hotel_id, String hotel_name, String hotel_address, String hotel_city, String hotel_country, String hotel_contract_number, String hotel_email, String hotel_description, Double star_rating, LocalDate check_in_time, LocalDate check_out_time, Integer ownerId) {
         this.hotel_id = hotel_id;
         this.hotel_name = hotel_name;
         this.hotel_address = hotel_address;
@@ -45,9 +46,10 @@ public class Hotels {
         this.star_rating = star_rating;
         this.check_in_time = check_in_time;
         this.check_out_time = check_out_time;
+        this.ownerId = ownerId;
     }
 
-    public Hotels(String hotel_name, String hotel_address, String hotel_city, String hotel_country, String hotel_contract_number, String hotel_email, String hotel_description, Double star_rating, LocalDate check_in_time, LocalDate check_out_time, BitSet status) {
+    public Hotels(String hotel_name, String hotel_address, String hotel_city, String hotel_country, String hotel_contract_number, String hotel_email, String hotel_description, Double star_rating, LocalDate check_in_time, LocalDate check_out_time, Integer ownerId) {
         this.hotel_name = hotel_name;
         this.hotel_address = hotel_address;
         this.hotel_city = hotel_city;
@@ -58,6 +60,7 @@ public class Hotels {
         this.star_rating = star_rating;
         this.check_in_time = check_in_time;
         this.check_out_time = check_out_time;
+        this.ownerId = ownerId;
     }
 
     public Integer getHotel_id() {
@@ -148,6 +151,14 @@ public class Hotels {
         this.check_out_time = check_out_time;
     }
 
+    public Integer getOwnerId() {
+        return ownerId;
+    }
+
+    public void setOwnerId(Integer ownerId) {
+        this.ownerId = ownerId;
+    }
+
     @Override
     public String toString() {
         return "Hotels{" +
@@ -162,6 +173,7 @@ public class Hotels {
                 ", star_rating=" + star_rating +
                 ", check_in_time=" + check_in_time +
                 ", check_out_time=" + check_out_time +
+                ", ownerId=" + ownerId +
                 '}';
     }
 }
