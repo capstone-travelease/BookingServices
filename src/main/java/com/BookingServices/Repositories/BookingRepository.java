@@ -31,7 +31,7 @@ public interface BookingRepository extends JpaRepository<Booking, Long> {
             "WHERE b.bookingId = ?1")
     List<ResponseTicketDTO> getTicket(Integer bookingId);
 
-    @Query("SELECT new com.BookingServices.DTOs.ResponseProductListDTO(r.room_name, rd.room_capacity, pl.roomQuantity) FROM ProductList pl\n" +
+    @Query("SELECT new com.BookingServices.DTOs.ResponseProductListDTO(r.room_name, rd.room_capacity, pl.roomQuantity, r.room_price) FROM ProductList pl\n" +
             "INNER JOIN Booking b ON b.bookingId = pl.bookingId\n" +
             "INNER JOIN Rooms r ON r.room_id = pl.roomId\n" +
             "INNER JOIN Roomdetail rd ON rd.room_id = r.room_id\n" +
