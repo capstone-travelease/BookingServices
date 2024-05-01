@@ -68,76 +68,59 @@ padding: 10px 0px;
 }
 </style>
 <script>
-function test() {
-var array = [
-          { roomName: "Tiêu chuẩn", quanity: 10, price: 10000 },
-          { roomName: "VIP", quanity: 6, price: 10000 },
-          { roomName: "Luxury", quanity: 8, price: 50020 },
-        ];
-        var result = ``;
-        for (let i = 0; i < array.length; i++) {
-result += `
-<tr>
-<td>${array[i].roomName}</td>
-                    <td>${array[i].quanity}</td>
-                    <td>0VND</td>
-                    <td>${array[i].price}VND</td>
-                </tr>
-                `;
-        }
-        $(".list_room").append(result);
-      }
-    </script>
+
+</script>
   </head>
   <body>
     <main>
       <div class="container">
         <h2 class="header">Thank you for your order</h2>
         <div class="content">
-          <div style="margin: 5px 0px">Hi 123!</div>
+          <div style="margin: 5px 0px">Hi ${fullName}</div>
           <div style="margin: 5px 0px">
             Thank you for using our services! We will respond to you shortly
             upon receiving your hotel booking information
           </div>
-          <h4 class="content_order_id">[Purchase #886] (27 December, 2023)</h4>
-          <h2 class="content_hotel_name">Thuy Van Hotel</h2>
+          <h4 class="content_order_id">[Purchase #${bookingId}] (${bookingDate})</h4>
+          <h2 class="content_hotel_name">${hotelName}</h2>
           <div class="order_infomation">
-            Address: SGT Miranda McAnderson 6543 N 9th Street APO, AA 33608-1234
+            Address: ${hotelAddress}
           </div>
           <div style="display: flex; justify-content: space-between">
             <div>
-              <div class="order_infomation">Check-in Date: 25/12/2023</div>
-              <div class="order_infomation">Check-out Date: 26/12/2023</div>
+              <div class="order_infomation">Check-in Date: ${checkinDate}</div>
+              <div class="order_infomation">Check-out Date: ${checkoutDate}</div>
             </div>
             <div>
-              <div class="order_infomation">Status: Pending</div>
+              <div class="order_infomation">Status: ${bookingStatus}</div>
             </div>
           </div>
-          <div class="order_infomation">Note: Done</div>
           <table>
             <tr>
-              <th>Room ID</th>
+              <th>Room Name</th>
               <th>Quantity</th>
-              <th>Coupon</th>
               <th>Price</th>
             </tr>
             <tbody class="list_room">
-              <script>
-                test();
-              </script>
+                  <#list list as item>
+                      <tr>
+                        <td>${item.roomName}</td>
+                        <td>${item.roomQuantity}</td>
+                        <td>${item.roomPrice}VND</td>
+                    </tr>
+                  </#list>
             </tbody>
             <tr>
               <td>Total:</td>
               <td></td>
-              <td></td>
-              <td>3500000VND</td>
+              <td>${totalPrice}VND</td>
             </tr>
           </table>
           <h3 class="content_order_id">Payment Infomation</h3>
-          <div>Payment method: Momo</div>
-          <div>Email: nguyen@gmail.com</div>
+          <div>Payment method: ${nameBank}</div>
+          <div>Email: ${email}</div>
           <div class="content_footer">
-            Chúng tôi đang tiến hành hoàn thiện đơn đặt hàng của bạn
+            We are currently completing your order
           </div>
         </div>
       </div>

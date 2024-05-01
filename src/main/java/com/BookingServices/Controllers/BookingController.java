@@ -8,8 +8,10 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -97,6 +99,38 @@ public class BookingController {
         return new ResponingStatusDTO(response.getStatus(),null,"The bank account of this bank  is existed");
     }
 
+    @GetMapping("/otp/{id}")
+    public Map<String,String> getOTP(@PathVariable("id") Integer userId, HttpServletResponse response){
+              Integer httpCode = bookingService.getOTP(userId);
+              Map<String,String> returnRespone = new HashMap<>();
+              if(httpCode == HttpServletResponse.SC_INTERNAL_SERVER_ERROR){
+                  response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+                  returnRespone.put("message","Internal_Server_ERROR");
+                  return returnRespone;
+              } else if (httpCode == HttpServletResponse.SC_NOT_FOUND) {
+                  response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+                  returnRespone.put("message","User isn't existed");
+                  return returnRespone;
+              }
+        returnRespone.put("message","Success");
+              return returnRespone;
+    }
+
+    @PostMapping("/otp/{id}")
+    public Map<String,String> checkOTP(@PathVariable("id") Integer userId,@RequestBody OTPRequestDTO otp, HttpServletResponse response){
+       Integer httpCode = bookingService.checkOTP(userId,otp.getOtpCode());
+        Map<String,String> returnRespone = new HashMap<>();
+       if(httpCode == HttpServletResponse.SC_NOT_ACCEPTABLE){
+           response.setStatus(httpCode);
+           returnRespone.put("message","OTP is expired");
+           return returnRespone;
+       } else if (httpCode == HttpServletResponse.SC_INTERNAL_SERVER_ERROR) {
+           returnRespone.put("message","OTP is expired");
+           return returnRespone;
+       }
+        returnRespone.put("message","OK");
+       return returnRespone;
+    }
     @PostMapping("/order")
     public ResponingStatusDTO addBooking(@RequestBody @Valid BookingRequestDTO data, HttpServletResponse response){
         Integer serviceStatus = bookingService.addTicket(data);

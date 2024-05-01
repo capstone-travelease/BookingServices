@@ -1,6 +1,5 @@
 package com.BookingServices.Services;
 
-import com.BookingServices.DTOs.ResponseBookingDTO;
 import com.BookingServices.DTOs.ResponseTicketDTO;
 import com.BookingServices.Repositories.BookingRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,11 +25,8 @@ public class AfterBookingService {
     public Object getTicket(Integer bookingId){
         ResponseTicketDTO dataTicket = bookingRepository.getTicket(bookingId);
         List<Object> data = bookingRepository.getProductList(bookingId);
-
         dataTicket.setProductList(data);
-
         Object result = (Object) dataTicket;
-
         return result;
     }
 
