@@ -162,6 +162,7 @@ public class Hotels {
                 ", star_rating=" + star_rating +
                 ", check_in_time=" + check_in_time +
                 ", check_out_time=" + check_out_time +
+                ", ownerId=" + ownerId +
                 '}';
     }
 }
