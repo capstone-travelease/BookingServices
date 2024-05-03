@@ -23,17 +23,22 @@ public class AfterBookingService {
     }
 
     public Object getTicket(Integer bookingId){
-        ResponseTicketDTO dataTicket = bookingRepository.getTicket(bookingId);
+        List<ResponseTicketDTO> dataTicket = bookingRepository.getTicket(bookingId);
         List<Object> data = bookingRepository.getProductList(bookingId);
-        dataTicket.setProductList(data);
-        Object result = (Object) dataTicket;
+
+        for(ResponseTicketDTO data1 : dataTicket){
+            data1.setProductList(data);
+        }
+
+        Object result = (Object) dataTicket.get(0);
+        System.out.println(result);
         return result;
     }
 
     public Integer cancelBooking(Integer bookingId){
-        ResponseTicketDTO dataTicket = bookingRepository.getTicket(bookingId);
+        List<ResponseTicketDTO> dataTicket = bookingRepository.getTicket(bookingId);
 
-        if(dataTicket == null){
+        if(dataTicket.get(0) == null){
             return 2;
         }
 

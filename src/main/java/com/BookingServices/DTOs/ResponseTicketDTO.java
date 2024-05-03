@@ -17,11 +17,12 @@ public class ResponseTicketDTO {
     private List<Object> productList;
     private String paymentMethod = "Credit Card";
     private Long totalPrice;
+    private Integer ownerId;
 
     public ResponseTicketDTO() {
     }
 
-    public ResponseTicketDTO(Integer ticketId, Integer hotelId, String fileUrl, String hotelName, String hotelCity, String userName, String userEmail, String userPhone, Date checkInDate, Date checkOutDate, Long totalPrice) {
+    public ResponseTicketDTO(Integer ticketId, Integer hotelId, String fileUrl, String hotelName, String hotelCity, String userName, String userEmail, String userPhone, Date checkInDate, Date checkOutDate, Long totalPrice, Integer ownerId) {
         this.ticketId = ticketId;
         this.hotelId = hotelId;
         this.fileUrl = fileUrl;
@@ -33,6 +34,7 @@ public class ResponseTicketDTO {
         this.checkInDate = checkInDate;
         this.checkOutDate = checkOutDate;
         this.totalPrice = totalPrice;
+        this.ownerId = ownerId;
     }
 
     public Integer getTicketId() {
@@ -131,13 +133,20 @@ public class ResponseTicketDTO {
         this.totalPrice = totalPrice;
     }
 
-
     public String getPaymentMethod() {
         return paymentMethod;
     }
 
     public void setPaymentMethod(String paymentMethod) {
         this.paymentMethod = paymentMethod;
+    }
+
+    public Integer getOwnerId() {
+        return ownerId;
+    }
+
+    public void setOwnerId(Integer ownerId) {
+        this.ownerId = ownerId;
     }
 
     @Override
@@ -156,6 +165,7 @@ public class ResponseTicketDTO {
                 ", productList=" + productList +
                 ", paymentMethod='" + paymentMethod + '\'' +
                 ", totalPrice=" + totalPrice +
+                ", ownerId=" + ownerId +
                 '}';
     }
 }
