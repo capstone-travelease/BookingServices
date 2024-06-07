@@ -1,11 +1,14 @@
 package com.BookingServices.Services;
 
+import com.BookingServices.DTOs.ResponseBookingDTO;
 import com.BookingServices.DTOs.ResponseTicketDTO;
 import com.BookingServices.Repositories.BookingRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
 public class AfterBookingService {
@@ -16,10 +19,17 @@ public class AfterBookingService {
         this.bookingRepository = bookingRepository;
     }
 
-    public List<Object> getBooking(String statusName, Integer userId){
-        List<Object> dataBooking = bookingRepository.getBookingList(statusName, userId);
+    public List<ResponseBookingDTO> getBooking(String statusName, Integer userId){
+        List<ResponseBookingDTO> dataBooking = bookingRepository.getBookingList(statusName, userId);
 
-        return dataBooking;
+        Map<Integer, List<ResponseBookingDTO>> groupedAttachment = dataBooking.stream()
+                .collect(Collectors.groupingBy(ResponseBookingDTO::getBookingId));
+
+        List<ResponseBookingDTO> transformedBooking = groupedAttachment.values().stream()
+                .map(hotelsInGroup -> hotelsInGroup.get(0))
+                .collect(Collectors.toList());
+
+        return transformedBooking;
     }
 
     public Object getTicket(Integer bookingId){

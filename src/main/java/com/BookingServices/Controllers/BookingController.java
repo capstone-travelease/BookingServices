@@ -25,12 +25,12 @@ public class BookingController {
 
 //    @GetMapping("test")
 //    public List<Object> test(){
-//        return bookingService.customizeTicket(null);
+//        return bookingService.customizeTicket(null);d
 //    }
 
     @GetMapping("get-orders")
     public ResponingStatusDTO getBooking(@RequestBody AfterBookingRequestDTO afterBookingRequestDTO){
-        List<Object> data = afterBookingService.getBooking(afterBookingRequestDTO.getStatusName(), afterBookingRequestDTO.getUserId());
+        List<ResponseBookingDTO> data = afterBookingService.getBooking(afterBookingRequestDTO.getStatusName(), afterBookingRequestDTO.getUserId());
         return new ResponingStatusDTO(
                 200,
                 data,
