@@ -8,7 +8,7 @@ spring:
     port: 5672
     username: guest
     password: guest
-    host: 35.247.170.16
+    host: 34.126.137.107
   datasource:
     url: jdbc:postgresql://34.126.137.107:5432/travelmarketplace
     username: postgres
